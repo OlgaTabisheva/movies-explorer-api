@@ -1,6 +1,5 @@
-//const validator = require('validator');
+const validator = require('validator');
 const mongoose = require('mongoose');
-//const { urlRegex } = require('../utils');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -17,11 +16,9 @@ const userSchema = new mongoose.Schema({
     type: String, // имя — это строка
     minlength: 2, // минимальная длина имени — 2 символа
     maxlength: 30, // а максимальная — 30 символов
-   required: true,
+    required: true,
   },
-
 });
 
-//userSchema.path('email').validate((val) => validator.isEmail(val), 'Invalid email.');
-
+userSchema.path('email').validate((val) => validator.isEmail(val), 'Invalid email.');
 module.exports = mongoose.model('user', userSchema);

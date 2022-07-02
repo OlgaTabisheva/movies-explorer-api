@@ -1,7 +1,5 @@
-const mongoose = require('mongoose');
 const movie = require('../models/movie');
 const NotFoundError = require('../errors/not-found-err');
-const RequestErr = require('../errors/request-err');
 const ForbiddenErr = require('../errors/forbidden-err');
 
 const getMovies = (req, res, next) => {
@@ -10,22 +8,40 @@ const getMovies = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-const createMovies = (req, res, next) => {
-  console.log("01")
-  const { nameEN, nameRU, movieId, thumbnail, trailer, image, description, year, duration, director, country, } = req.body;
+const createMovie = (req, res, next) => {
+  const {
+    nameEN,
+    nameRU,
+    movieId,
+    thumbnail,
+    trailer,
+    image,
+    description,
+    year,
+    duration,
+    director,
+    country,
+  } = req.body;
   const owner = req.user;
-  if (!nameRU || !year) {
-    console.log("02")
-    throw new RequestErr('Данные карточки заполненны не полностью');
-  }
-  console.log("03")
-  return movie.create({ nameEN, nameRU, movieId, thumbnail, trailer, image, description, year, duration, director, country, owner })
-
-    .then((newCard) => res.send(newCard))
+  return movie.create({
+    nameEN,
+    nameRU,
+    movieId,
+    thumbnail,
+    trailer,
+    image,
+    description,
+    year,
+    duration,
+    director,
+    country,
+    owner,
+  })
+    .then((newMovie) => res.send(newMovie))
     .catch((err) => next(err));
 };
 
-async function deleteMovies(req, res, next) {
+async function deleteMovie(req, res, next) {
   movie.findOne({ _id: req.params.movieId })
     .then((thisMovie) => {
       if (!thisMovie) {
@@ -45,8 +61,7 @@ async function deleteMovies(req, res, next) {
 }
 
 module.exports = {
-  createMovies,
+  createMovie,
   getMovies,
-  deleteMovies,
-
+  deleteMovie,
 };

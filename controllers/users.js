@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const user = require('../models/user');
-const NotFoundError = require('../errors/not-found-err');
 const RequestErr = require('../errors/request-err');
 const NotAutErr = require('../errors/not-aut-err');
 const ServerErr = require('../errors/server-err');
@@ -11,7 +10,6 @@ const createUser = (req, res, next) => {
   const {
     name, email, password,
   } = req.body;
-  console.log('1')
   return bcrypt.hash(password, 10)
     .then((hash) => user.create({
       name,
@@ -38,7 +36,6 @@ const createUser = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-
 const patchUser = (req, res, next) => {
   const { name, about } = req.body;
   user.findByIdAndUpdate(
@@ -52,14 +49,13 @@ const patchUser = (req, res, next) => {
     .then((newUser) => {
       res.send({
         name: newUser.name,
-        email: newUser.email
+        email: newUser.email,
       });
     })
     .catch((err) => next(err));
 };
 
 const getUserMe = (req, res, next) => {
-  console.log('001')
   const { _id } = req.user;
   user.findOne(
     { _id },
@@ -67,7 +63,7 @@ const getUserMe = (req, res, next) => {
     .then((newUser) => {
       res.send({
         name: newUser.name,
-        email: newUser.email
+        email: newUser.email,
       });
     })
     .catch((err) => next(err));

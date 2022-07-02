@@ -4,7 +4,6 @@ const NotAutErr = require('../errors/not-aut-err');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    console.log('1')
     throw new NotAutErr('Необходима авторизация');
   }
 

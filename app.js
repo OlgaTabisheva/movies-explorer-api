@@ -6,10 +6,9 @@ const { errors } = require('celebrate');
 const { userRouter } = require('./routes/user');
 const { moviesRouter } = require('./routes/movie');
 const auth = require('./middlewares/auth');
-const { urlRegex } = require('./utils');
 const NotFoundError = require('./errors/not-found-err');
 
-//error.log and request.log
+// error.log and request.log
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
@@ -71,8 +70,8 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
-useNewUrlParser: true,
-useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 app.listen(PORT, () => {
   console.log('Сервер запущен');
