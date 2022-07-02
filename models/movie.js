@@ -13,7 +13,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   duration: {
-  //  type: Number,
+    type: Number,
     required: true,
   },
   year: {
@@ -28,7 +28,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  trailerLink: {
+  trailer: {
     type: String,
     required: true,
   },
@@ -38,12 +38,12 @@ const movieSchema = new mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
- //   ref: 'user',
+   ref: 'user',
     required: true,
   },
   movieId: {
-    type: mongoose.Schema.Types.ObjectId,
-  //  ref: 'user',
+    type: String,
+   // ref: 'user',
     required: true,
   },
   nameRU: {
@@ -56,7 +56,7 @@ const movieSchema = new mongoose.Schema({
   },
 });
 
-movieSchema.path('image').validate((val) => urlRegex.test(val), 'Invalid URL.');
-movieSchema.path('trailerLink').validate((val) => urlRegex.test(val), 'Invalid URL.');
-movieSchema.path('thumbnail').validate((val) => urlRegex.test(val), 'Invalid URL.');
+//movieSchema.path('image').validate((val) => urlRegex.test(val), 'Invalid URL.');
+//movieSchema.path('trailerLink').validate((val) => urlRegex.test(val), 'Invalid URL.');
+//movieSchema.path('thumbnail').validate((val) => urlRegex.test(val), 'Invalid URL.');
 module.exports = mongoose.model('movie', movieSchema);
