@@ -9,6 +9,7 @@ const auth = require('./middlewares/auth');
 const { urlRegex } = require('./utils');
 const NotFoundError = require('./errors/not-found-err');
 
+//error.log and request.log
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
