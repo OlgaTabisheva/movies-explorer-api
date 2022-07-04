@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 const express = require('express');
-const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 const { userRouter } = require('./routes/user');
 const { moviesRouter } = require('./routes/movie');
+const { registerRouter } = require('./routes/registration');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 
@@ -13,7 +13,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 const { PORT = 3001 } = process.env;
-const { createUser, login } = require('./controllers/users');
 
 app.use(express.json());
 // app.use(cors(corsOptions))
@@ -34,25 +33,10 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
-
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    name: Joi.string().optional().min(2).max(30),
-
-  }),
-}), createUser);
-
-app.use('/', auth, userRouter);
-app.use('/', auth, moviesRouter);
-app.use('/', auth, (req, res, next) => {
+app.use(registerRouter);
+app.use(auth, userRouter);
+app.use(auth, moviesRouter);
+app.use(auth, (req, res, next) => {
   next(new NotFoundError('Маршрут не найден'));
 });
 

@@ -37,10 +37,10 @@ const createUser = (req, res, next) => {
 };
 
 const patchUser = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
   user.findByIdAndUpdate(
     req.user,
-    { name, about },
+    { name, email },
     {
       new: true,
       runValidators: true,
