@@ -3,7 +3,8 @@ const { celebrate, Joi } = require('celebrate');
 const {
   getMovies, createMovie, deleteMovie,
 } = require('../controllers/movies');
-const {urlRegex} =require('../utils')
+const { urlRegex } = require('../utils');
+
 router.get('/movies', getMovies);
 
 router.post('/movies', celebrate({

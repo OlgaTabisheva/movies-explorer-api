@@ -53,7 +53,7 @@ app.use((err, req, res, next) => {
   next();
 });
 
-const {NODE_ENV, MONGO_PATH } = process.env;
+const { NODE_ENV, MONGO_PATH } = process.env;
 mongoose.connect(NODE_ENV === 'production' ? MONGO_PATH : 'mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
