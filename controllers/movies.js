@@ -42,14 +42,14 @@ const createMovie = (req, res, next) => {
 };
 
 async function deleteMovie(req, res, next) {
-  movie.findOne({ _id: req.params.internalId })
+  movie.findOne({ movieId: req.params.Id })
     .then((thisMovie) => {
       if (!thisMovie) {
         throw new NotFoundError('Фильм не найден');
       } else if (!thisMovie.owner._id.equals(req.user._id)) {
         throw new ForbiddenErr('Чужой фильм');
       }
-      return movie.findByIdAndRemove(req.params.internalId)
+      return movie.findByIdAndRemove(thisMovie._id)
         .then((newMovie) => {
           if (newMovie === null) {
             throw new NotFoundError('Фильм не найден');
