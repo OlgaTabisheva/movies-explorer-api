@@ -21,7 +21,12 @@ const createUser = (req, res, next) => {
         name: newUser.name,
         _id: newUser._id,
       };
-      res.send({ data: outUser });
+      const { NODE_ENV, JWT_SECRET } = process.env;
+      res.send({
+        token: jwt.sign({ _id: outUser._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {
+          expiresIn: '7d',}),
+          data: outUser,
+        })
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
