@@ -43,7 +43,7 @@ const createMovie = (req, res, next) => {
 };
 
 async function deleteMovie(req, res, next) {
-  movie.findOne({ movieId: req.params.Id })
+  movie.findOne({ movieId: req.params.Id , owner: req.user._id})
     .then((thisMovie) => {
       if (!thisMovie) {
         throw new NotFoundError('Фильм не найден');
